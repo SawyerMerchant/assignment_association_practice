@@ -51,8 +51,10 @@ hirb_puts Comment.first.post
 puts "Remove one post from a category's collection of posts"
 puts "before"
 hirb_puts pts = Category.first.posts
-puts "after"
+puts "deletion"
 hirb_puts pts.delete(pts.last)
+puts "after"
+hirb_puts pts.posts
 
 puts "List the posts authored by a given user"
 hirb_puts User.first.posts
@@ -61,11 +63,29 @@ hirb_puts User.first.posts
 puts "List the IDs of all posts authored by a given user "
 hirb_puts User.first.posts.ids
 
-# Set a collection of Posts to replace that user's currently authored posts, e.g. User.first.posts = [Post.first, Post.second]
-# List the authors of a given post
-# Set a collection of Users to replace a given Post's authors in a similar way
-# Accomplish the same thing by only using IDs (hint: there's an association method for this...)
-# List the posts under a given tag
-# Add a new post to a given tag by only using its ID
-# Add a new tag to a given post by only using its ID
-# List the tags on a given post
+puts "Set a collection of Posts to replace that user's currently authored posts"
+hirb_puts User.first.posts = [Post.first, Post.second]
+
+puts "List the authors of a given post"
+hirb_puts Post.first.authors
+
+puts "Set a collection of Users to replace a given Post's authors in a similar way"
+puts "Before"
+hirb_puts Post.first.authors
+puts "After"
+hirb_puts Post.first.authors = [User.first, User.second]
+
+puts "Accomplish the same thing by only using IDs (hint: there's an association method for this...)"
+hirb_puts Post.first.post_user_ids = 4
+
+puts "List the posts under a given tag"
+hirb_puts Posts.first.tags
+
+puts "Add a new post to a given tag by only using its ID"
+hirb_puts Tag.last.posts = [Post.first, Post.second]
+
+puts "Add a new tag to a given post by only using its ID"
+hirb_puts Tag.last.post_ids << 6
+
+puts "List the tags on a given post"
+hirb_puts Post.first.tags

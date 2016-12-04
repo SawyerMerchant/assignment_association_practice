@@ -5,7 +5,7 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
-NUM = 5
+NUM = 50
 $users = []
 $posts = []
 def create_users(num)
@@ -15,10 +15,10 @@ def create_users(num)
 end
 
 def create_categories(num)
-  Category.create( name: Faker::Lorem.word)
+  num.times do
+    Category.create( name: Faker::Lorem.word)
+  end
 end
-
-
 
 def create_posts(num)
   category_ids = Category.pluck(:id)
@@ -41,7 +41,9 @@ def create_comments(num)
 end
 
 def create_tags(num)
-  Tag.create(name: Faker::Lorem.word)
+  num.times do
+    Tag.create(name: Faker::Lorem.word)
+  end
 end
 
 def populate_post_tags(num)
@@ -58,7 +60,6 @@ def populate_post_tags(num)
 end
 
 def populate_post_users(num)
-
   User.all.each do |user|
     user.posts.create( body: Faker::Lorem.paragraph,
                        category_id: Category.pluck(:id).sample )
@@ -66,25 +67,8 @@ def populate_post_users(num)
 end
 
 
-# def generate_users(post_id)
-#   (rand(10) + 1).times do
-#   pt = PostTags.new
-#   pt[:order_id] = post_id
-#   pt[:product_id] = Product.pluck(:id).sample
-#
-#   # prevents breaking the uniqueness constraint on
-#   # [:order_id, :product_id]
-#   if OrderContent.where(:product_id => c.product_id,
-#     :order_id => c.order_id).empty?
-#     c.save
-#     end
-#   end
-# end
 
-
-
-
-puts "Erasing prior databas"
+puts "Erasing prior database"
 
 User.destroy_all
 Post.destroy_all
